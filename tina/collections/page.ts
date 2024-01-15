@@ -1,45 +1,96 @@
-import { Collection } from "tinacms";
+// import { Collection } from "tinacms";
+//
+// export const PageCollection: Collection = {
+//   name: "page",
+//   label: "Page",
+//   path: "content/pages",
+//   format: "md",
+//   ui: {
+//     router: () => "/",
+//   },
+//   fields: [
+//     {
+//       type: "string",
+//       name: "header",
+//       label: "Header",
+//     },
+//     {
+//       type: "object",
+//       name: "logo",
+//       label: "Logo",
+//       fields: [
+//         { type: "image", name: "url", label: "URL" },
+//         { type: "string", name: "alt", label: "Alt Text" },
+//       ],
+//     },
+//     {
+//       type: "object",
+//       list: true,
+//       name: "links",
+//       label: "Links",
+//       ui: {
+//         itemProps: (item) => {
+//           return {
+//             label: item?.header,
+//           };
+//         },
+//       },
+//       fields: [
+//         { type: "string", name: "header" },
+//         { type: "string", name: "description" },
+//         { type: "string", name: "url" },
+//       ],
+//     },
+//   ],
+// };
 
-export const PageCollection: Collection = {
+import type { Collection } from "tinacms";
+import { heroBlockSchema } from "../../components/blocks/hero";
+import { contentBlockSchema } from "../../components/blocks/content";
+import { testimonialBlockSchema } from "../../components/blocks/testimonial";
+import { featureBlockSchema } from "../../components/blocks/features";
+
+const Page: Collection = {
+  label: "Pages",
   name: "page",
-  label: "Page",
-  path: "content/pages",
-  format: "md",
+  path: "public/content/pages",
   ui: {
-    router: () => "/",
+    router: ({ document }) => {
+      if (document._sys.filename === "home") {
+        return `/`;
+      }
+      if (document._sys.filename === "about") {
+        return `/about`;
+      }
+      return undefined;
+    },
   },
   fields: [
     {
       type: "string",
-      name: "header",
-      label: "Header",
-    },
-    {
-      type: "object",
-      name: "logo",
-      label: "Logo",
-      fields: [
-        { type: "image", name: "url", label: "URL" },
-        { type: "string", name: "alt", label: "Alt Text" },
-      ],
+      label: "Title",
+      name: "title",
+      description:
+        "The title of the page. This is used to display the title in the CMS",
+      isTitle: true,
+      required: true,
     },
     {
       type: "object",
       list: true,
-      name: "links",
-      label: "Links",
+      name: "blocks",
+      label: "Sections",
       ui: {
-        itemProps: (item) => {
-          return {
-            label: item?.header,
-          };
-        },
+        visualSelector: true,
       },
-      fields: [
-        { type: "string", name: "header" },
-        { type: "string", name: "description" },
-        { type: "string", name: "url" },
+      templates: [
+        heroBlockSchema,
+        featureBlockSchema,
+        contentBlockSchema,
+        testimonialBlockSchema,
       ],
     },
   ],
 };
+
+export default Page;
