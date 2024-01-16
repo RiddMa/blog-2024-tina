@@ -18,7 +18,7 @@ export default defineConfig({
   authProvider: isLocal
     ? new LocalAuthProvider()
     : new UsernamePasswordAuthJSProvider(),
-  contentApiUrlOverride: "/api/tina/gql",
+  // contentApiUrlOverride: "/api/tina/gql",
   build: {
     publicFolder: "public",
     outputFolder: "admin",
