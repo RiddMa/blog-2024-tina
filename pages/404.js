@@ -1,4 +1,4 @@
-import { Hero } from "../components/blocks/hero.tsx.txt";
+import { Hero } from "../components/blocks/hero";
 import { Layout } from "../components/layout";
 
 export default function FourOhFour() {

@@ -81,8 +81,8 @@ export const getStaticProps = async ({ params }) => {
 export const getStaticPaths = async () => {
   const columnsListData = await client.queries.columnConnection();
   return {
-    paths: columnsListData.data.columnConnection.edges.map((column) => ({
-      params: { filename: column.node._sys.filename, name: column.node.name }
+    paths: columnsListData?.data?.columnConnection?.edges?.map((column) => ({
+      params: { filename: column!.node!._sys.filename, name: column!.node!.name }
     })),
     fallback: "blocking"
   };

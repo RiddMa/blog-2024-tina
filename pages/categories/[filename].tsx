@@ -9,7 +9,6 @@ import { Section } from "../../components/util/section";
 import React from "react";
 import { PostsNav } from "../posts";
 import { PostCard } from "../../components/posts/posts";
-import { Column } from "../columns/[filename]";
 
 export const Category = ({ category, global }) => {
   return (
@@ -82,8 +81,8 @@ export const getStaticProps = async ({ params }) => {
 export const getStaticPaths = async () => {
   const categoriesData = await client.queries.categoryConnection();
   return {
-    paths: categoriesData.data.categoryConnection.edges.map((category) => ({
-      params: { filename: category.node._sys.filename, name: category.node.name }
+    paths: categoriesData?.data?.categoryConnection?.edges?.map((category) => ({
+      params: { filename: category!.node!._sys.filename, name: category!.node!.name }
     })),
     fallback: "blocking"
   };
