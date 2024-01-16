@@ -1,26 +1,31 @@
 module.exports = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: ["@svgr/webpack"],
+      use: ["@svgr/webpack"]
     });
 
     return config;
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "assets.tina.io"
+      }
+    ]
   },
   async rewrites() {
     return [
       {
         source: "/",
-        destination: "/home",
+        destination: "/home"
       },
       {
         source: "/admin",
-        destination: "/admin/index.html",
-      },
+        destination: "/admin/index.html"
+      }
     ];
-  },
+  }
 };
