@@ -12,12 +12,13 @@ export default function ColumnsPage(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const columns = props?.data?.categoryConnection?.edges;
+  const navs = props?.data?.global?.postNavs?.nav;
   return (
     <Layout>
       <Section className="flex-1">
         <Container className="flex flex-col gap-8">
-          <PostsNav navs={props?.data.global?.postNavs?.nav} />
-          <Categories data={columns} />
+          <PostsNav navs={navs!} />
+          <Categories data={columns!} />
         </Container>
       </Section>
     </Layout>
@@ -26,6 +27,7 @@ export default function ColumnsPage(
 
 export const getStaticProps = async () => {
   const categories = await client.queries.categoryQuery();
+  // @ts-ignore
   const tinaProps: typeof categories & {
     data?: { categoryConnection?: { edges?: { node?: { posts?: typeof posts } }[] } }
   } = categories;
@@ -49,7 +51,7 @@ export const getStaticProps = async () => {
 
   const categoryPosts: { [key: string]: typeof posts } = {};
   posts.forEach(post => {
-    post.node?.categories?.forEach(category => {
+    post!.node?.categories?.forEach(category => {
       const categoryName = category?.category?.name;
       if (!categoryName) {
         throw new Error("category name is undefined in one of the posts");
@@ -61,9 +63,9 @@ export const getStaticProps = async () => {
     });
   });
 
-  tinaProps.data.categoryConnection.edges.forEach(category => {
-    const categoryName = category.node?.name;
-    category.node["posts"] = categoryPosts[categoryName] || [];
+  tinaProps?.data?.categoryConnection?.edges?.forEach(category => {
+    const categoryName = category!.node!.name;
+    category!.node!["posts"] = categoryPosts[categoryName] || [];
   });
 
   return {
@@ -73,6 +75,6 @@ export const getStaticProps = async () => {
   };
 };
 
-export type CategoriesType = InferGetStaticPropsType<
-  typeof getStaticProps
->["data"]["categoryConnection"]["edges"][number];
+// export type CategoriesType = InferGetStaticPropsType<
+//   typeof getStaticProps
+// >["data"]["categoryConnection"]["edges"][number];

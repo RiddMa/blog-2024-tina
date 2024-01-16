@@ -1,22 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useTheme } from "../layout";
-import format from "date-fns/format";
-import { PostsType } from "../../pages/posts";
+import { format } from "date-fns";
+// import { PostsType } from "../../pages/posts";
 import { getUriFromFilepath } from "../../util/util";
 import Image from "next/image";
 
-type PageQueryPostType = PostsType["node"]
+// type PageQueryPostType = PostsType["node"]
 
 export function PostCard(props: {
-  post: PageQueryPostType,
+  post: any,
 }) {
   const post = props.post;
   const date = new Date(post.updateDate);
   const formattedDate = !isNaN(date.getTime()) ? format(date, "yyyy-MM-dd") : "";
-  // console.log(JSON.stringify(post, null, 4));
   const postHref = getUriFromFilepath(post._sys.path);
 
   return <>
@@ -59,7 +56,7 @@ export function PostCard(props: {
   </>;
 }
 
-export const Posts = ({ data }: { data: PostsType[] }) => {
+export const Posts = ({ data }: { data: any[] }) => {
   return (
     <div className="flex flex-col gap-8">
       {data.map((postData) => {

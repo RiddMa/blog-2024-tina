@@ -1,6 +1,6 @@
 import { client } from "../../tina/__generated__/client";
 import { tinaField, useTina } from "tinacms/dist/react";
-import { Layout, useTheme } from "../../components/layout";
+import { Layout } from "../../components/layout";
 import { InferGetStaticPropsType } from "next";
 import { merge } from "lodash-es";
 import { Section } from "../../components/util/section";

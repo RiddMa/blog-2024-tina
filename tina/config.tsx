@@ -31,6 +31,6 @@ export default defineConfig({
     },
   },
   schema: {
-    collections: [Post, Global, Author, Page, Category, Column],
+    collections: [TinaUserCollection, Post, Global, Author, Page, Category, Column],
   },
 });

@@ -84,18 +84,18 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
           <ul className="flex gap-4 fhd:gap-8 -mx-4">
             {data.nav && data.nav.map((item, i) => {
               const activeItem =
-                (item.href === ""
+                (item?.href === ""
                   ? router.asPath === "/"
-                  : router.asPath.includes(item.href)) && isClient;
+                  : router.asPath.includes(item?.href!)) && isClient;
               return (
-                <li key={`${item.label}-${i}`} className={`${activeItem ? activeItemClasses[theme.color] : ""}`}
+                <li key={`${item?.label}-${i}`} className={`${activeItem ? activeItemClasses[theme.color] : ""}`}
                 >
                   <Link
-                    data-tina-field={tinaField(item, "label")}
-                    href={`/${item.href}`}
+                    data-tina-field={tinaField(item!, "label")}
+                    href={`/${item?.href}`}
                     className={`relative select-none text-base inline-block tracking-wide transition-apple hover:opacity-100 py-8 px-4 ${activeItem ? `` : `opacity-70`}`}
                   >
-                    {item.label}
+                    {item?.label}
                     {activeItem && (
                       <svg
                         className={`absolute bottom-0 left-1/2 w-[180%] h-full -translate-x-1/2 -z-1 opacity-10 dark:opacity-15 ${

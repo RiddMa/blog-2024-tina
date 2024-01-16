@@ -168,8 +168,6 @@ const Global: Collection = {
       type: "object",
       label: "Theme",
       name: "theme",
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       fields: [
         {
           type: "string",

@@ -14,7 +14,6 @@
 import React from "react";
 import { Container } from "../util/container";
 import { Section } from "../util/section";
-import { useTheme } from "../layout";
 import type { Components, TinaMarkdownContent } from "tinacms/dist/rich-text";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { Prism } from "tinacms/dist/rich-text/prism";
@@ -40,7 +39,7 @@ const components: Components<{
     disclaimer?: TinaMarkdownContent;
   };
 }> = {
-  code_block: (props) => <Prism {...props} />,
+  code_block: (props) => <Prism {...props!} />,
   BlockQuote: (props: {
     children: TinaMarkdownContent;
     authorName: string;
@@ -111,50 +110,41 @@ const components: Components<{
   img: (props) => (
     <span>
       <div className="h-4"></div>
-      <ImageAwesome src={props.url} alt={props.alt} />
+      <ImageAwesome src={props!.url} alt={props!.alt || ""} />
       <div className="h-4"></div>
     </span>
   )
 };
 
 export const Post = (props: PostType) => {
-  const theme = useTheme();
-  const titleColorClasses = {
-    blue: "from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-500",
-    teal: "from-teal-400 to-teal-600 dark:from-teal-300 dark:to-teal-500",
-    green: "from-green-400 to-green-600",
-    red: "from-red-400 to-red-600",
-    pink: "from-pink-300 to-pink-500",
-    purple:
-      "from-purple-400 to-purple-600 dark:from-purple-300 dark:to-purple-500",
-    orange:
-      "from-orange-300 to-orange-600 dark:from-orange-200 dark:to-orange-500",
-    yellow:
-      "from-yellow-400 to-yellow-500 dark:from-yellow-300 dark:to-yellow-500"
-  };
-
-  const date = new Date(props.date);
   let formattedDate = "";
   let dateToNow = "";
-  if (!isNaN(date.getTime())) {
-    formattedDate = format(date, "yyyy-MM-dd, HH:mm");
-    dateToNow = formatDistanceToNowStrict(date, { addSuffix: true, locale: zhCN });
+  if (props.date) {
+    const date = new Date(props.date);
+    if (!isNaN(date.getTime())) {
+      formattedDate = format(date, "yyyy-MM-dd, HH:mm");
+      dateToNow = formatDistanceToNowStrict(date, { addSuffix: true, locale: zhCN });
+    }
   }
-  const updateDate = new Date(props.updateDate);
+
   let formattedUpdateDate = "";
   let updateDateToNow = "";
-  if (!isNaN(updateDate.getTime())) {
-    formattedUpdateDate = format(updateDate, "yyyy-MM-dd, HH:mm");
-    updateDateToNow = formatDistanceToNowStrict(date, { addSuffix: true, locale: zhCN });
+  if (props.updateDate) {
+    const updateDate = new Date(props.updateDate);
+
+    if (!isNaN(updateDate.getTime())) {
+      formattedUpdateDate = format(updateDate, "yyyy-MM-dd, HH:mm");
+      updateDateToNow = formatDistanceToNowStrict(updateDate, { addSuffix: true, locale: zhCN });
+    }
   }
+
+
   return (
     <Section>
       <Container className="flex flex-col gap-8">
         <h1
           data-tina-field={tinaField(props, "title")}
-          className={`text-h1 text-center bg-clip-text text-transparent bg-gradient-to-r ${
-            titleColorClasses[theme.color]
-          }`}
+          className={`text-h1 text-center bg-clip-text text-transparent bg-gradient-to-r`}
         >
           {props.title}
         </h1>
@@ -191,7 +181,7 @@ export const Post = (props: PostType) => {
               <div data-tina-field={tinaField(props, "columns")} className="flex flex-row gap-4">
                 {
                   props.columns.map((column) =>
-                    <Link key={column?.column?.name} href={`/columns/${column.column._sys.filename}`}
+                    <Link key={column?.column?.name} href={`/columns/${column?.column?._sys.filename}`}
                           className="text-color-href">
                       {column?.column?.name}
                     </Link>

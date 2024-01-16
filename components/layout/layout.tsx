@@ -20,35 +20,35 @@ export const Layout = ({
       <Head>
         <title>Ridd的主页</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        {data.theme.font === "nunito" && (
-          <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link
-              href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;1,400;1,700;1,800&display=swap"
-              rel="stylesheet"
-            />
-          </>
-        )}
-        {data.theme.font === "lato" && (
-          <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link
-              href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap"
-              rel="stylesheet"
-            />
-          </>
-        )}
+        {/*{data.theme.font === "nunito" && (*/}
+        {/*  <>*/}
+        {/*    <link rel="preconnect" href="https://fonts.googleapis.com" />*/}
+        {/*    <link rel="preconnect" href="https://fonts.gstatic.com" />*/}
+        {/*    <link*/}
+        {/*      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;1,400;1,700;1,800&display=swap"*/}
+        {/*      rel="stylesheet"*/}
+        {/*    />*/}
+        {/*  </>*/}
+        {/*)}*/}
+        {/*{data.theme.font === "lato" && (*/}
+        {/*  <>*/}
+        {/*    <link rel="preconnect" href="https://fonts.googleapis.com" />*/}
+        {/*    <link rel="preconnect" href="https://fonts.gstatic.com" />*/}
+        {/*    <link*/}
+        {/*      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap"*/}
+        {/*      rel="stylesheet"*/}
+        {/*    />*/}
+        {/*  </>*/}
+        {/*)}*/}
       </Head>
       <Theme data={data?.theme}>
-        <Header data={data?.header} />
+        <Header data={data?.header!} />
         <div className={`color-body z-0 flex min-h-screen flex-col justify-start space-y-0`}>
           <div className={`h-[96px]`}></div>
           <div className={`content-wrapper %bg-gray-100 grow pb-16`}>
             <div className={`article-wrapper %bg-gray-200`}>{children}</div>
           </div>
-          <Footer data={data?.footer} icon={data?.header.icon} />
+          <Footer data={data?.footer} />
         </div>
         {/*<div*/}
         {/*  className={`min-h-screen flex flex-col ${*/}

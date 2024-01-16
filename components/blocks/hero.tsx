@@ -2,27 +2,16 @@ import * as React from "react";
 import { Actions } from "../util/actions";
 import { Container } from "../util/container";
 import { Section } from "../util/section";
-import { useTheme } from "../layout";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import type { TinaTemplate } from "tinacms";
-import { PageBlocksHero } from "../../tina/__generated__/types";
+import { PageBlocksHero, PageBlocksHeroActions } from "../../tina/__generated__/types";
 import { tinaField } from "tinacms/dist/react";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
-  const theme = useTheme();
-  const headlineColorClasses = {
-    blue: "from-blue-400 to-blue-600",
-    teal: "from-teal-400 to-teal-600",
-    green: "from-green-400 to-green-600",
-    red: "from-red-400 to-red-600",
-    pink: "from-pink-400 to-pink-600",
-    purple: "from-purple-400 to-purple-600",
-    orange: "from-orange-300 to-orange-600",
-    yellow: "from-yellow-400 to-yellow-600",
-  };
-
+  // @ts-ignore
+  // @ts-ignore
   return (
-    <Section color={data.color}>
+    <Section color={data.color!}>
       <Container
         className="grid grid-cols-1 md:grid-cols-5 gap-14 items-center justify-center pb-16"
       >
@@ -39,11 +28,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.headline && (
             <h3 data-tina-field={tinaField(data, "headline")}>
               <span
-                className={`text-h1 bg-clip-text text-transparent bg-gradient-to-r  ${
-                  data.color === "primary"
-                    ? `from-white to-gray-100`
-                    : headlineColorClasses[theme.color]
-                }`}
+                className={`text-h1 bg-clip-text text-transparent bg-gradient-to-r`}
               >
                 {data.headline}
               </span>
@@ -62,8 +47,8 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.actions && (
             <Actions
               className="justify-center md:justify-start py-2"
-              parentColor={data.color}
-              actions={data.actions}
+              parentColor={data.color!}
+              actions={data.actions.filter(action => action !== null) as PageBlocksHeroActions[]}
             />
           )}
         </div>
@@ -74,13 +59,13 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           >
             <img
               className="absolute w-full rounded-lg max-w-xs md:max-w-none h-auto blur-2xl brightness-150 contrast-[0.9] dark:brightness-150 saturate-200 opacity-50 dark:opacity-30 mix-blend-multiply dark:mix-blend-hard-light"
-              src={data.image.src}
+              src={data.image.src!}
               aria-hidden="true"
             />
             <img
               className="relative z-10 w-full max-w-xs rounded-lg md:max-w-none h-auto"
-              alt={data.image.alt}
-              src={data.image.src}
+              alt={data.image.alt!}
+              src={data.image.src!}
             />
           </div>
         )}

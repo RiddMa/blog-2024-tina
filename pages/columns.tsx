@@ -16,7 +16,7 @@ export default function ColumnsPage(
       <Section className="flex-1">
         <Container className="flex flex-col gap-8">
           <PostsNav navs={props?.data.global?.postNavs?.nav} />
-          <Columns data={columns} />
+          <Columns data={columns!} />
         </Container>
       </Section>
     </Layout>
@@ -25,6 +25,7 @@ export default function ColumnsPage(
 
 export const getStaticProps = async () => {
   const columns = await client.queries.columnQuery();
+  // @ts-ignore
   const tinaProps: typeof columns & {
     data?: { columnConnection?: { edges?: { node?: { posts?: typeof posts } }[] } }
   } = columns;
@@ -48,7 +49,7 @@ export const getStaticProps = async () => {
 
   const columnPosts: { [key: string]: typeof posts } = {};
   posts.forEach(post => {
-    post.node?.columns?.forEach(column => {
+    post!.node?.columns?.forEach(column => {
       const columnName = column?.column?.name;
       if (!columnName) {
         throw new Error("Column name is undefined in one of the posts");
@@ -60,9 +61,9 @@ export const getStaticProps = async () => {
     });
   });
 
-  tinaProps.data.columnConnection.edges.forEach(column => {
-    const columnName = column.node?.name;
-    column.node["posts"] = columnPosts[columnName] || [];
+  tinaProps?.data?.columnConnection?.edges?.forEach(column => {
+    const columnName = column!.node!.name!;
+    column!.node!["posts"] = columnPosts[columnName] || [];
   });
 
   return {
@@ -72,6 +73,6 @@ export const getStaticProps = async () => {
   };
 };
 
-export type ColumnsType = InferGetStaticPropsType<
-  typeof getStaticProps
->["data"]["columnConnection"]["edges"][number];
+// export type ColumnsType = InferGetStaticPropsType<
+//   typeof getStaticProps
+// >["data"]["columnConnection"]["edges"][number];

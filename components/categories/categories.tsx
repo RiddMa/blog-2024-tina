@@ -3,11 +3,11 @@ import Link from "next/link";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { getUriFromFilepath } from "../../util/util";
 import Image from "next/image";
-import { CategoriesType } from "../../pages/categories";
+// import { CategoriesType } from "../../pages/categories";
 
-type PageQueryCategoryType = CategoriesType["node"]
+// type PageQueryCategoryType = CategoriesType["node"]
 
-export function CategoryCard(props: { category: PageQueryCategoryType }) {
+export function CategoryCard(props: { category: any }) {
   const category = props.category;
   const categoryHref = getUriFromFilepath(category._sys.path);
 
@@ -37,7 +37,7 @@ export function CategoryCard(props: { category: PageQueryCategoryType }) {
 }
 
 
-export const Categories = ({ data }: { data: CategoriesType[] }) => {
+export const Categories = ({ data }: { data: any[] }) => {
   return <div className="flex flex-col gap-8">
     {data.map((categoryData) => {
       return (

@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { ColumnsType } from "../../pages/columns";
+// import { ColumnsType } from "../../pages/columns";
 import { getUriFromFilepath } from "../../util/util";
 import Image from "next/image";
 
-type PageQueryColumnType = ColumnsType["node"]
+// type PageQueryColumnType = ColumnsType["node"]
 
-export function ColumnCard(props: { column: PageQueryColumnType }) {
+export function ColumnCard(props: { column: any }) {
   const column = props.column;
   const columnHref = getUriFromFilepath(column._sys.path);
 
@@ -37,7 +37,7 @@ export function ColumnCard(props: { column: PageQueryColumnType }) {
 }
 
 
-export const Columns = ({ data }: { data: ColumnsType[] }) => {
+export const Columns = ({ data }: { data: any[] }) => {
   return <div className="flex flex-col gap-8">
     {data.map((columnData) => {
       return (

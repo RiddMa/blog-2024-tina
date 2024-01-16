@@ -8,7 +8,7 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export const PostsNav = ({ navs }: { navs: { __typename: "GlobalPostNavsNav", href?: string, label?: string }[] }) => {
+export const PostsNav = ({ navs }) => {
   const router = useRouter();
   const [isClient, setIsClient] = React.useState(false);
   React.useEffect(() => {
@@ -44,7 +44,7 @@ export default function HomePage(
       <Section className="flex-1">
         <Container className="flex flex-col gap-8">
           <PostsNav navs={props.data.global?.postNavs?.nav} />
-          <Posts data={posts} />
+          <Posts data={posts!} />
         </Container>
       </Section>
     </Layout>
@@ -60,6 +60,6 @@ export const getStaticProps = async () => {
   };
 };
 
-export type PostsType = InferGetStaticPropsType<
-  typeof getStaticProps
->["data"]["postConnection"]["edges"][number];
+// export type PostsType = InferGetStaticPropsType<
+//   typeof getStaticProps
+// >["data"]["postConnection"]["edges"][number];
